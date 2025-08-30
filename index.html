@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nature Aesthetic</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      color: white;
+    }
+
+    .sidebar {
+      background-color: #2e3d30;
+      width: 220px;
+      display: flex;
+      flex-direction: column;
+      padding: 30px 15px;
+      position: fixed;
+      height: 100%;
+      color: white;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 22px;
+    }
+
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      margin: 15px 0;
+      font-size: 18px;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: #90ee90;
+    }
+
+    .sign-in {
+      margin-top: auto;
+      background-color: #90ee90;
+      color: #2e3d30;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .sign-in:hover {
+      background-color: #a9f3a9;
+    }
+
+    .main {
+      margin-left: 220px;
+      width: calc(100% - 220px);
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      height: 100vh;
+    }
+
+    section {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+    }
+
+    /* Home Section Styling */
+    #home {
+      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* About Section Styling */
+    #about {
+      background-image: url('https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Offer Section Styling */
+    #offer {
+      background-image: url('https://plus.unsplash.com/premium_photo-1673697240011-76f7f9220300?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmFja2dyb3VuZCUyMGltYWdlfGVufDB8fDB8fHww');
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* Overlay for Home & About */
+    #home::before,
+    #about::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+
+    /* Overlay for Offer with lighter overlay */
+    #offer::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 0;
+    }
+
+    .content-box {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      color: white;
+      font-weight: 300;
+    }
+
+    #home .content-box h1,
+    #about .content-box h1 {
+      font-size: 3.5em;
+      margin-bottom: 15px;
+      font-weight: 700;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    }
+
+    #home .content-box p,
+    #about .content-box p {
+      font-size: 1.4em;
+      line-height: 1.6;
+      opacity: 0.9;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+    }
+
+    /* Offer section content box overrides */
+    #offer .content-box {
+      color: #2e6b2e;
+      font-weight: 400;
+      max-width: 850px;
+      text-align: left;
+    }
+
+    #offer .content-box h1 {
+      font-size: 3em;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #2e6b2e;
+      text-shadow: none;
+    }
+
+    #offer .content-box p {
+      font-size: 1.25em;
+      line-height: 1.6;
+      margin-bottom: 35px;
+      color: #3a7d3a;
+    }
+
+    /* Facts container */
+    .facts {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 25px;
+    }
+
+    .fact {
+      flex: 1 1 200px;
+      background-color: #e6f1e6;
+      border-radius: 12px;
+      padding: 25px 20px;
+      box-shadow: 0 4px 12px rgba(46, 107, 46, 0.2);
+      color: #2e6b2e;
+      font-weight: 600;
+      font-size: 1.1em;
+      transition: transform 0.3s ease;
+      cursor: default;
+      text-align: center;
+      user-select: none;
+    }
+
+    .fact:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(46, 107, 46, 0.35);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100px;
+        padding: 20px 10px;
+      }
+
+      .main {
+        margin-left: 100px;
+        width: calc(100% - 100px);
+      }
+
+      .nav-link {
+        font-size: 14px;
+      }
+
+      .sign-in {
+        font-size: 14px;
+      }
+
+      #home .content-box h1,
+      #about .content-box h1 {
+        font-size: 2.2em;
+      }
+
+      #home .content-box p,
+      #about .content-box p {
+        font-size: 1em;
+      }
+
+      #offer .content-box h1 {
+        font-size: 2.5em;
+      }
+
+      #offer .content-box p {
+        font-size: 1.1em;
+      }
+
+      .facts {
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Nature</h2>
+    <a class="nav-link" href="#home">Home</a>
+    <a class="nav-link" href="#about">About</a>
+    <a class="nav-link" href="#offer">Offers</a>
+    <a class="nav-link" href="#weather">Weather</a>
+    <a class="sign-in" href="#">Sign In</a>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+    <!-- Home -->
+    <section id="home">
+      <div class="content-box">
+        <h1>Reconnect with Nature</h1>
+        <p>Breathe in the calm. Feel the earth.</p>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <div class="content-box">
+        <h1>About This Website</h1>
+        <p>
+          This is a simple demo nature-themed website showcasing the beauty of the natural world.
+          Built using only HTML and CSS, it features a clean design, vertical navigation, and a multi-section layout.
+          The goal is to create a peaceful aesthetic and offer a gentle user experience.
+        </p>
+        <p>
+          You can enhance this with real images, a blog section, or even add user accounts and more interactive features.
+        </p>
+      </div>
+    </section>
+
+    <!-- Offer -->
+    <section id="offer">
+      <div class="content-box">
+        <h1>What Nature Offers Us</h1>
+        <p>
+          Nature is our greatest provider, offering life-sustaining resources, peace, and inspiration.
+          Here are some powerful facts proving why protecting nature matters.
+        </p>
+
+        <div class="facts">
+          <div class="fact">
+            🌲 <strong>Oxygen Production:</strong><br> Forests produce over 28% of the world’s oxygen.
+          </div>
+          <div class="fact">
+            💧 <strong>Freshwater Source:</strong><br> Nature provides 100% of the world's freshwater supply.
+          </div>
+          <div class="fact">
+            🐝 <strong>Pollination:</strong><br> Over 75% of leading global crops rely on natural pollinators.
+          </div>
+          <div class="fact">
+            🌡️ <strong>Climate Regulation:</strong><br> Forests absorb 2 billion tons of CO₂ every year.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Placeholder for weather -->
+    <!-- WEATHER SECTION START -->
+<section id="weather" style="background-image: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center;">
+  <style>
+    #weather::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+
+    #weather .content-box {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      text-align: center;
+      color: white;
+    }
+
+    #weather .content-box h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      font-weight: bold;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+    }
+
+    #weather .content-box p {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+    }
+
+    .weather-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .weather-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      border-radius: 12px;
+      padding: 20px;
+      width: 220px;
+      color: white;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+    }
+
+    .weather-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .weather-card .icon {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .weather-card h3 {
+      font-size: 1.4em;
+      margin-bottom: 10px;
+      color: #90ee90;
+    }
+
+    .weather-card p {
+      font-size: 0.95em;
+      line-height: 1.4em;
+      color: #e0f8e0;
+    }
+
+    @media (max-width: 768px) {
+      .weather-cards {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .weather-card {
+        width: 80%;
+      }
+
+      #weather .content-box h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
+
+  <div class="content-box">
+    <h1>Nature’s Climate Zones</h1>
+    <p>Explore the climates that shape our environment and ecosystems.</p>
+
+    <div class="weather-cards">
+      <div class="weather-card">
+        <div class="icon">🌧️</div>
+        <h3>Rainforest</h3>
+        <p>High rainfall and humidity support lush vegetation and wildlife.</p>
+      </div>
+      <div class="weather-card">
+        <div class="icon">❄️</div>
+        <h3>Tundra</h3>
+        <p>Freezing cold, with short summers and unique hardy species.</p>
+      </div>
+      <div class="weather-card">
+        <div class="icon">☀️</div>
+        <h3>Savanna</h3>
+        <p>Warm with wet and dry seasons, home to vast grasslands.</p>
+      </div>
+      <div class="weather-card">
+        <div class="icon">🌬️</div>
+        <h3>Mountains</h3>
+        <p>Chilly, windy, and layered with different climates by altitude.</p>
+      </div>
+      <div class="weather-card">
+        <div class="icon">🌾</div>
+        <h3>Grassland</h3>
+        <p>Open, dry plains rich with grasses and grazing animals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- WEATHER SECTION END -->
+  </div>
+
+</body>
+</html>
